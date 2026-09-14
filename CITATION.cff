@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+title: "Governance Canon: CCTF, CSRF, and Triple Governance"
+message: "If you reference these frameworks, please cite this archive."
+type: dataset
+authors:
+  - family-names: Tillar
+    given-names: James Andrew
+    affiliation: Tillar Technologies
+abstract: >-
+  Three frameworks for building and evaluating governed intelligent systems, archived with
+  their concept-level provenance. CCTF (Contextual Compatibility and Transformation Framework)
+  asks what an intelligent system should represent and how it should act under partial
+  observation. CSRF (Constitutional Scientific Reasoning Framework) asks what procedures make
+  claims reliable regardless of what kind of system makes them. Triple Governance specifies
+  what an idea is permitted to do, as distinct from where it came from. CCTF and CSRF were
+  split from a single unified program specifically so that neither is permitted to validate the other; the
+  only sanctioned interface is a preregistered 2×2 factorial. All status lines, mundane nulls,
+  and falsifiers are reproduced unmodified; one operational section is redacted and the
+  redaction is declared. No comparative experiment has been run.
+keywords:
+  - AI governance
+  - scientific reasoning
+  - provenance
+  - falsifiability
+  - auditability
+  - governed agents
+license: CC-BY-4.0
+date-released: 2026-09-14
+version: 0.1.0
+repository-code: "https://github.com/TheBrokenWay/governance-canon"

@@ -1,0 +1,23 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+SPDX-License-Identifier: CC-BY-4.0
+
+Copyright (c) 2026 James Andrew Tillar, Tillar Technologies
+
+This work is licensed under the Creative Commons Attribution 4.0 International
+License. You are free to share and adapt this material for any purpose, including
+commercially, provided you give appropriate credit, provide a link to the license,
+and indicate if changes were made.
+
+The complete legal text of this license is published by Creative Commons at
+https://creativecommons.org/licenses/by/4.0/legalcode and is incorporated here by
+reference. Where this notice and that text differ, that text governs.
+
+NOTE TO THE MAINTAINER: replace this file with the full legalcode before or shortly
+after first publication. GitHub's license detector matches on the legalcode body,
+not on a notice, so until it is pasted in this repository will show no license
+badge and reusers will see a summary rather than terms. Fetch it with:
+
+    curl -sL https://creativecommons.org/licenses/by/4.0/legalcode.txt > LICENSE
+
+then re-add the three lines above (title, SPDX identifier, copyright) at the top.
