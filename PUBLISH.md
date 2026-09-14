@@ -35,6 +35,12 @@ State at last audit, 2026-09-14. Everything below either passes or is named as a
 3. **Push, then mint the Zenodo DOI on the `v0.1.0` tag the same day.** The DOI is the
    third-party archival timestamp and it is the reason this is one repository rather than three.
 
+## Who can push this
+
+Not the Claude session that built it: no GitHub connector exists in the registry, its `gh` is
+scoped to pre-configured repositories, and the device shell is blocked by the 2026-09-08 Windows
+update. Push is the author's or Codex's. Step-by-step commands: `PUSH-governance-canon.txt`.
+
 ## Never publish here
 
 **The EXP-004 routing-policy package must not enter this repository.** Its `inputs/` directory
