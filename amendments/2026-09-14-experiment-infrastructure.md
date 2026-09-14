@@ -32,11 +32,14 @@ block stands.
 
 | Contribution | Lineage | Disposition |
 |---|---|---|
-| Experiment-infrastructure proposal | one AI lineage, at the author's request | **revision required** |
-| Review — correlation category error, receipt/epistemic conflation, premature G1/G4 closure | second lineage | findings sustained |
-| Review — probe suite extension D–H, metric isolation, harness separation | third lineage | findings sustained |
-| Review — compensation-channel list, threat model, witness requirements | fourth lineage | findings sustained |
-| EXP-001 execution and F-1 | this lineage | reported, not adjudicated |
+| Experiment-infrastructure proposal | **DeepSeek** | **revision required** |
+| Review — correlation category error, receipt/epistemic conflation, premature G1/G4 closure | **Grok** | findings sustained; replacement language adopted verbatim |
+| Review — probe suite extension D–H, metric isolation, harness separation | **Gemini** | findings sustained |
+| Review — compensation-channel list, threat model, witness requirements | **Microsoft Copilot** | findings sustained |
+| EXP-001 execution and F-1 | **Claude** | reported, not adjudicated |
+| Model gauntlet; independent custody verification of the EXP-004 package | **Codex** | custody confirmed, 9 of 9 inputs, sealed key unopened |
+
+Full attribution: [`../CREDITS.md`](../CREDITS.md).
 
 All lineages are separate model families. None is an independent witness in the canon's sense:
 none held root digests independently, none re-ran anything under preregistration, and all

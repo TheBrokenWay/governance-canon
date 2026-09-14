@@ -295,6 +295,9 @@ Cross-lineage review is rival generation under SR-5. It is not replication: no r
 root digests independently, re-ran anything under preregistration, or acquired its own
 observations.
 
+Who did what, at the strength the record supports — including what the author's own
+implementing lineage got wrong — is in [`CREDITS.md`](CREDITS.md).
+
 ---
 
 ## Repository rules
