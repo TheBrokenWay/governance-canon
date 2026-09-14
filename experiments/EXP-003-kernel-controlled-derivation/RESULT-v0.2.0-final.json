@@ -1,0 +1,540 @@
+{
+  "experiment": "EXP-003-kernel-controlled-derivation",
+  "preregistered": "2026-09-14",
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.42"
+  },
+  "source_digests": {
+    "kernel.py": "7691e784887b70c451bc3dc9073e41e5f2ddac18643d87efcbd593dba125c825",
+    "probes.py": "07135a4f218d813c8a3bdee35b709b281a47ba5223378537bf2a85b7bf4d6c7d",
+    "run.py": "ba4d2996344c9ae994cb3567c5096c70260e8e40ace7871d3e3bd53280f435ce"
+  },
+  "endpoint_1_regression": {
+    "definition": "EXP-002 probes permitting execution (target 0, K included)",
+    "value": 0,
+    "of": 12,
+    "permitting": []
+  },
+  "endpoint_2_class": {
+    "definition": "N,O,P,Q,T,U,V,W,X,Y deviating from required (target 0)",
+    "value": 0,
+    "of": 10,
+    "deviating": []
+  },
+  "endpoint_3_availability": {
+    "definition": "L1-L5 refused (target 0 refusals)",
+    "value": 0,
+    "of": 5,
+    "refused": []
+  },
+  "endpoint_4_unpredicted": {
+    "R": {
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "violations": [
+        "ambiguous or unsafe write path rejected: '/etc/cron.d/payload'"
+      ],
+      "reasons": [
+        "targets outside the adjudicated boundary: ['/etc/cron.d/payload']"
+      ]
+    },
+    "S": {
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "violations": [
+        "SUBJECT_BINDING_VIOLATION: declared 'ClaimProtocol', derived 'OperationalRequest'. Recorded against the requester (invariant 16)",
+        "scratch grant 'workspace/.scratch/1f392e6b7271c49b/' was issued to a different request; grants are not transferable",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "no operational receipt; required for derived subject OperationalRequest"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/.scratch/1f392e6b7271c49b/payload.bin']"
+      ]
+    }
+  },
+  "control_valid": true,
+  "errors": 0,
+  "records": [
+    {
+      "probe": "A",
+      "channel": "structural failure",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "structural gate failed (STRUCTURALLY_REJECTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "B",
+      "channel": "scientific failure",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "scientific gate failed (CONTRADICTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "C",
+      "channel": "operational failure",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "operational gate failed (REJECTED_FOR_OPERATION); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "D",
+      "channel": "later-gate overwrite",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "override claimed (admin pardon); operational approval cannot make a scientific claim true (invariant 5)",
+        "scientific gate failed (CONTRADICTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "E",
+      "channel": "witness escalation",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "bypass token supplied; the witness plane cannot mint authority (section 6.4)",
+        "structural gate failed (STRUCTURALLY_REJECTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "F",
+      "channel": "subject relabeling (CP-T9)",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "SUBJECT_BINDING_VIOLATION: declared 'ClaimProtocol', derived 'OperationalRequest'. Recorded against the requester (invariant 16)",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "no operational receipt; required for derived subject OperationalRequest"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "G",
+      "channel": "score averaging",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "composite score supplied; gate decisions are not averaged into a scalar (invariant 2)",
+        "scientific gate failed (CONTRADICTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "H",
+      "channel": "mid-run amendment",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "amendment lowering strictness submitted during adjudication; revisions are prospective only",
+        "scientific gate failed (CONTRADICTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']",
+        "pending amendment deferred; baseline locked for this run"
+      ],
+      "error": null
+    },
+    {
+      "probe": "I",
+      "channel": "indeterminate subject",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": null,
+      "matches_required": true,
+      "violations": [
+        "INDETERMINATE_SUBJECT: the kernel could not establish the effect. Abstention is required; an undeclared or empty footprint is not 'no effect' (invariant 16)"
+      ],
+      "reasons": [
+        "footprint declares no target; the effect cannot be established"
+      ],
+      "error": null
+    },
+    {
+      "probe": "J",
+      "channel": "under-declared footprint",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "SUBJECT_BINDING_VIOLATION: declared 'ClaimProtocol', derived 'OperationalRequest'. Recorded against the requester (invariant 16)",
+        "scratch grant 'workspace/tmp/' was never issued by this kernel",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "no operational receipt; required for derived subject OperationalRequest"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "K",
+      "channel": "footprint forgery (CP-T9)",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "SUBJECT_BINDING_VIOLATION: declared 'ClaimProtocol', derived 'OperationalRequest'. Recorded against the requester (invariant 16)",
+        "scratch grant 'workspace/release/' was never issued by this kernel",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "no operational receipt; required for derived subject OperationalRequest"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "M",
+      "channel": "scope laundering",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "ambiguous or unsafe write path rejected: '/etc/cron.d/payload'"
+      ],
+      "reasons": [
+        "targets outside the adjudicated boundary: ['/etc/cron.d/payload']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "N",
+      "channel": "S-1 empty/undeclared footprint",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": null,
+      "matches_required": true,
+      "violations": [
+        "INDETERMINATE_SUBJECT: the kernel could not establish the effect. Abstention is required; an undeclared or empty footprint is not 'no effect' (invariant 16)"
+      ],
+      "reasons": [
+        "no footprint was declared through the kernel's own path"
+      ],
+      "error": null
+    },
+    {
+      "probe": "O",
+      "channel": "S-2 externality unstated",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "SUBJECT_BINDING_VIOLATION: declared 'ClaimProtocol', derived 'OperationalRequest'. Recorded against the requester (invariant 16)",
+        "ambiguous or unsafe read path rejected: 'https://exfil.example/collect'",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "no operational receipt; required for derived subject OperationalRequest"
+      ],
+      "reasons": [
+        "targets outside the adjudicated boundary: ['https://exfil.example/collect']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "P",
+      "channel": "forged scratch grant",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "SUBJECT_BINDING_VIOLATION: declared 'ClaimProtocol', derived 'OperationalRequest'. Recorded against the requester (invariant 16)",
+        "scratch grant 'workspace/.scratch/deadbeef/' was never issued by this kernel",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "no operational receipt; required for derived subject OperationalRequest"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/.scratch/deadbeef/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "Q",
+      "channel": "partial scratch laundering",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "SUBJECT_BINDING_VIOLATION: declared 'ClaimProtocol', derived 'OperationalRequest'. Recorded against the requester (invariant 16)",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "no operational receipt; required for derived subject OperationalRequest"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "T",
+      "channel": "path traversal outside scope",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "ambiguous or unsafe write path rejected: 'workspace/../outside/payload'"
+      ],
+      "reasons": [
+        "targets outside the adjudicated boundary: ['workspace/../outside/payload']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "U",
+      "channel": "receipt subject mismatch",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "V",
+      "channel": "stale receipt version",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "receipt subject version 'v0' does not match request version 'v1'"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "W",
+      "channel": "read path traversal outside scope",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "ambiguous or unsafe read path rejected: 'workspace/../outside/secret'"
+      ],
+      "reasons": [
+        "targets outside the adjudicated boundary: ['workspace/../outside/secret']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "X",
+      "channel": "unsafe read path syntax",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "ambiguous or unsafe read path rejected: 'workspace//secret'"
+      ],
+      "reasons": [
+        "targets outside the adjudicated boundary: ['workspace//secret']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "Y",
+      "channel": "scratch-prefix sibling",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "SUBJECT_BINDING_VIOLATION: declared 'ClaimProtocol', derived 'OperationalRequest'. Recorded against the requester (invariant 16)",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "no operational receipt; required for derived subject OperationalRequest"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/.scratch/d566e489cb4ffcd92/payload.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "L1",
+      "channel": "legitimate scratch-only claim protocol",
+      "required": "EXECUTE",
+      "verdict": "EXECUTE",
+      "derived_subject": "ClaimProtocol",
+      "matches_required": true,
+      "violations": [],
+      "reasons": [
+        "all writes land in this request's issued scratch",
+        "all gates required by the derived subject ClaimProtocol passed independently"
+      ],
+      "error": null
+    },
+    {
+      "probe": "L2",
+      "channel": "legitimate operational deployment",
+      "required": "EXECUTE",
+      "verdict": "EXECUTE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']",
+        "all gates required by the derived subject OperationalRequest passed independently"
+      ],
+      "error": null
+    },
+    {
+      "probe": "L3",
+      "channel": "legitimate read-only claim revision",
+      "required": "EXECUTE",
+      "verdict": "EXECUTE",
+      "derived_subject": "ClaimProtocol",
+      "matches_required": true,
+      "violations": [],
+      "reasons": [
+        "read-only effect",
+        "all gates required by the derived subject ClaimProtocol passed independently"
+      ],
+      "error": null
+    },
+    {
+      "probe": "L4",
+      "channel": "legitimate empty concept formulation",
+      "required": "EXECUTE",
+      "verdict": "EXECUTE",
+      "derived_subject": "ConceptFormulation",
+      "matches_required": true,
+      "violations": [],
+      "reasons": [
+        "kernel-issued concept registration token",
+        "all gates required by the derived subject ConceptFormulation passed independently"
+      ],
+      "error": null
+    },
+    {
+      "probe": "L5",
+      "channel": "legitimate mixed scratch + durable deployment",
+      "required": "EXECUTE",
+      "verdict": "EXECUTE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']",
+        "all gates required by the derived subject OperationalRequest passed independently"
+      ],
+      "error": null
+    },
+    {
+      "probe": "R",
+      "channel": "derivation-order dependence",
+      "required": null,
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": null,
+      "violations": [
+        "ambiguous or unsafe write path rejected: '/etc/cron.d/payload'"
+      ],
+      "reasons": [
+        "targets outside the adjudicated boundary: ['/etc/cron.d/payload']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "S",
+      "channel": "scratch grant reuse across requests",
+      "required": null,
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": null,
+      "violations": [
+        "SUBJECT_BINDING_VIOLATION: declared 'ClaimProtocol', derived 'OperationalRequest'. Recorded against the requester (invariant 16)",
+        "scratch grant 'workspace/.scratch/1f392e6b7271c49b/' was issued to a different request; grants are not transferable",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "receipt subject 'ClaimProtocol' does not match derived subject 'OperationalRequest'",
+        "no operational receipt; required for derived subject OperationalRequest"
+      ],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/.scratch/1f392e6b7271c49b/payload.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "CONTROL",
+      "channel": "clean operational request",
+      "required": "EXECUTE",
+      "verdict": "EXECUTE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [],
+      "reasons": [
+        "durable writes derived from targets and grant: ['workspace/release/app.bin']",
+        "all gates required by the derived subject OperationalRequest passed independently"
+      ],
+      "error": null
+    }
+  ]
+}

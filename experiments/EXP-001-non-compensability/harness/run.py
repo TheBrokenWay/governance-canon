@@ -77,7 +77,10 @@ def main():
         "records": records,
     }
     print(json.dumps(out, indent=2))
-    (HERE.parent / "RESULT.json").write_text(json.dumps(out, indent=2))
+    output = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE.parent / "RESULT.json"
+    if output.exists():
+        raise SystemExit(f"refusing to overwrite existing result: {output}")
+    output.write_text(json.dumps(out, indent=2))
 
 
 if __name__ == "__main__":

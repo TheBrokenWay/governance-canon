@@ -3,7 +3,7 @@
 Three frameworks for building and evaluating governed intelligent systems, and the
 firewall intended to keep them from validating each other.
 
-Author: James Andrew Tillar · Tillar Technologies
+Author: James Andrew Tillar · Tillar Technologies LLC
 Canon documents first drafted 2026-07-21. Published here with one declared redaction
 (`canon/TRIPLE_GOVERNANCE.md` §8) — see `REDACTIONS.md`.
 
@@ -159,6 +159,9 @@ The useful adversarial questions, in order:
 Three tests have been run. See below. The other twenty specified experiments have not, so every
 remaining falsifier has the evidential weight of a sentence.
 
+The v0.2.0 remediation record documents additional path, receipt-binding, and
+write-once-result probes. It is a candidate release until independently reviewed.
+
 Issues and pull requests are welcome. Findings that survive review will be recorded as dated
 amendments with claim states, including findings the author disagrees with.
 
@@ -190,8 +193,11 @@ The kernel was **not patched** after the result. A proposed sixteenth invariant 
 the amendment and is not implemented, because patching a reference implementation until its own
 suite goes green turns an experiment into a receipt.
 
-Run it yourself: `cd experiments/EXP-001-non-compensability/harness && python3 run.py`.
-Standard library only, no dependencies, no product bindings.
+Run it yourself with Python 3.11 or newer: `cd experiments/EXP-001-non-compensability/harness && python3 run.py`.
+The harnesses use only the Python standard library; no virtual environment or
+third-party package is required. `make verify` runs syntax checks, all three
+cold harnesses, source-digest-bound reproducibility verification, and the canon
+hash check. Set `PYTHON=/path/to/python3` when selecting a specific interpreter.
 
 **EXP-002 — remediation, and the limit of the remediation.** Kernel v2 derives the
 authoritative subject from the request's effect footprint instead of its label. Preregistered

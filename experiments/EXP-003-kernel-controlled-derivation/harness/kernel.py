@@ -26,6 +26,7 @@ from enum import Enum
 from typing import Optional
 import hashlib
 import json
+import posixpath
 import secrets
 import time
 
@@ -103,6 +104,22 @@ class ScratchAllocator:
 ALLOCATOR = ScratchAllocator()
 
 
+class ConceptRegistrationAllocator:
+    def __init__(self) -> None:
+        self._issued: dict[str, str] = {}
+
+    def issue(self, request_id: str) -> str:
+        token = "concept-" + secrets.token_hex(8)
+        self._issued[token] = request_id
+        return token
+
+    def owner(self, token: str) -> Optional[str]:
+        return self._issued.get(token)
+
+
+CONCEPT_ALLOCATOR = ConceptRegistrationAllocator()
+
+
 # --------------------------------------------------------------------------
 # The caller's declaration. Deliberately narrow.
 # --------------------------------------------------------------------------
@@ -127,19 +144,34 @@ class EffectFootprint:
     read_targets: tuple[str, ...] = ()
     scratch_grant: Optional[str] = None
     declared: bool = False      # set True by make_footprint(); a raw() footprint is not
+    concept_token: Optional[str] = None
 
 
-def make_footprint(write_targets=(), read_targets=(), scratch_grant=None) -> EffectFootprint:
+def make_footprint(write_targets=(), read_targets=(), scratch_grant=None,
+                   concept_token=None) -> EffectFootprint:
     """The only supported way to build a footprint. Marks it as actually declared."""
-    return EffectFootprint(tuple(write_targets), tuple(read_targets), scratch_grant, True)
+    return EffectFootprint(tuple(write_targets), tuple(read_targets), scratch_grant, True,
+                           concept_token)
 
 
 # --------------------------------------------------------------------------
 # Derivation. Every input below is kernel-controlled or self-limiting.
 # --------------------------------------------------------------------------
 
+def _canonical_target(target: str) -> Optional[str]:
+    if not isinstance(target, str) or not target or "\\" in target:
+        return None
+    if target.startswith("/") or "//" in target:
+        return None
+    parts = target.split("/")
+    if any(p in ("", ".", "..") for p in parts):
+        return None
+    return posixpath.normpath(target)
+
+
 def _in_scope(target: str) -> bool:
-    return any(target.startswith(s) for s in ADJUDICATED_SCOPE)
+    canonical = _canonical_target(target)
+    return canonical is not None and any(canonical.startswith(s) for s in ADJUDICATED_SCOPE)
 
 
 def _is_granted_scratch(target: str, fp: EffectFootprint, request_id: str) -> bool:
@@ -147,11 +179,13 @@ def _is_granted_scratch(target: str, fp: EffectFootprint, request_id: str) -> bo
     g = fp.scratch_grant
     if not g:
         return False
-    if not g.startswith(SCRATCH_ROOT):
+    canonical_g = _canonical_target(g.rstrip("/"))
+    canonical_target = _canonical_target(target)
+    if canonical_g is None or canonical_target is None or not canonical_g.startswith(SCRATCH_ROOT.rstrip("/") + "/"):
         return False                          # not a kernel-issued shape
     if ALLOCATOR.owner(g) != request_id:
         return False                          # issued to some other request, or never issued
-    return target.startswith(g)
+    return canonical_target == canonical_g or canonical_target.startswith(canonical_g + "/")
 
 
 def derive_subject(fp: EffectFootprint, request_id: str) -> tuple[Optional[Subject], list[str]]:
@@ -162,6 +196,9 @@ def derive_subject(fp: EffectFootprint, request_id: str) -> tuple[Optional[Subje
         notes.append("no footprint was declared through the kernel's own path")
         return None, notes
     if not fp.write_targets and not fp.read_targets:
+        if fp.concept_token and CONCEPT_ALLOCATOR.owner(fp.concept_token) == request_id:
+            notes.append("kernel-issued concept registration token")
+            return Subject.CONCEPT_FORMULATION, notes
         notes.append("footprint declares no target; the effect cannot be established")
         return None, notes
 
@@ -184,11 +221,20 @@ def derive_subject(fp: EffectFootprint, request_id: str) -> tuple[Optional[Subje
 
 def scope_violations(fp: EffectFootprint, request_id: str) -> list[str]:
     out = []
-    for t in fp.write_targets:
-        if not _is_granted_scratch(t, fp, request_id) and not _in_scope(t):
-            out.append(f"durable write to '{t}' lies outside the adjudicated scope "
-                       f"{list(ADJUDICATED_SCOPE)}; the kernel cannot govern it and will "
-                       f"not authorize it")
+    for kind, targets in (("write", fp.write_targets), ("read", fp.read_targets)):
+        for t in targets:
+            if _canonical_target(t) is None:
+                out.append(f"ambiguous or unsafe {kind} path rejected: '{t}'")
+                continue
+            if not _is_granted_scratch(t, fp, request_id) and not _in_scope(t):
+                if kind == "read":
+                    out.append(f"read target '{t}' lies outside the adjudicated scope "
+                               f"{list(ADJUDICATED_SCOPE)}; external reads require an explicit "
+                               "policy and are not authorized")
+                else:
+                    out.append(f"durable write to '{t}' lies outside the adjudicated scope "
+                               f"{list(ADJUDICATED_SCOPE)}; the kernel cannot govern it and will "
+                               f"not authorize it")
     if fp.scratch_grant and ALLOCATOR.owner(fp.scratch_grant) not in (None, request_id):
         out.append(f"scratch grant '{fp.scratch_grant}' was issued to a different request; "
                    f"grants are not transferable")
@@ -308,6 +354,12 @@ def adjudicate(req: Request) -> Decision:
 
     issuers: dict[str, set[Constitution]] = {}
     for r in req.receipts:
+        if r.subject is not subject:
+            violations.append(f"receipt subject '{r.subject.value}' does not match "
+                              f"derived subject '{subject.value}'")
+        if r.subject_version != req.subject_version:
+            violations.append(f"receipt subject version '{r.subject_version}' does not "
+                              f"match request version '{req.subject_version}'")
         issuers.setdefault(r.issuer, set()).add(r.constitution)
     for issuer, consts in issuers.items():
         if len(consts) > 1:

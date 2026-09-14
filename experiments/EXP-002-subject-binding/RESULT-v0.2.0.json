@@ -1,0 +1,256 @@
+{
+  "experiment": "EXP-002-subject-binding",
+  "preregistered": "2026-09-14",
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.42"
+  },
+  "source_digests": {
+    "kernel.py": "0fa87c6e46189498dccfada5914f1f42137a3d4f7081006d3934fd2f3dd5494c",
+    "probes.py": "b01e5892f1e2f6b8cf485c4b3e131bf6e1962fcbeb7a19241f3024dbb3325c36",
+    "run.py": "0cb519f0c093cb7c9a4fe119250df06e92eced4ea3dd8663d96c13104565cc4a"
+  },
+  "endpoint_1_regression": {
+    "definition": "original probes A-H permitting execution (target 0)",
+    "value": 0,
+    "of": 8,
+    "probes_permitting": []
+  },
+  "endpoint_2_remedy_surface": {
+    "definition": "new probes I,J,L,M deviating from required (target 0)",
+    "value": 0,
+    "of": 4,
+    "probes_deviating": []
+  },
+  "endpoint_3_probe_K": {
+    "definition": "reported as observed, not scored",
+    "verdict": "EXECUTE",
+    "derived_subject": "ClaimProtocol",
+    "violations": [],
+    "reasons": [
+      "writes confined to declared scratch; not an operational effect",
+      "read-only or scratch-only effect",
+      "all gates required by the DERIVED subject ClaimProtocol passed independently"
+    ]
+  },
+  "control_valid": true,
+  "errors": 0,
+  "records": [
+    {
+      "probe": "A",
+      "channel": "structural failure",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "structural gate failed (STRUCTURALLY_REJECTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable or external effect derived from parameters: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "B",
+      "channel": "scientific failure",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "scientific gate failed (CONTRADICTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable or external effect derived from parameters: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "C",
+      "channel": "operational failure",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "operational gate failed (REJECTED_FOR_OPERATION); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable or external effect derived from parameters: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "D",
+      "channel": "later-gate overwrite / retroactive pardon",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "override claimed (operational-admin: scientific result pardoned); operational approval cannot make a scientific claim true (invariant 5)",
+        "scientific gate failed (CONTRADICTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable or external effect derived from parameters: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "E",
+      "channel": "witness escalation",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "bypass token supplied; the witness plane cannot mint authority (section 6.4)",
+        "structural gate failed (STRUCTURALLY_REJECTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable or external effect derived from parameters: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "F",
+      "channel": "subject relabeling",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "SUBJECT_BINDING_VIOLATION: declared 'ClaimProtocol', derived 'OperationalRequest' from the effect footprint. Recorded against the requester (invariant 16)",
+        "no operational receipt; required for derived subject OperationalRequest"
+      ],
+      "reasons": [
+        "durable or external effect derived from parameters: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "G",
+      "channel": "score averaging",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "composite score supplied; gate decisions are not averaged into a scalar (invariant 2)",
+        "scientific gate failed (CONTRADICTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable or external effect derived from parameters: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "H",
+      "channel": "mid-run amendment weakening",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "amendment lowering strictness submitted during adjudication; revisions are prospective only",
+        "scientific gate failed (CONTRADICTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "durable or external effect derived from parameters: ['workspace/release/app.bin']",
+        "pending amendment deferred; baseline locked for this run"
+      ],
+      "error": null
+    },
+    {
+      "probe": "I",
+      "channel": "indeterminate subject",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": null,
+      "matches_required": true,
+      "violations": [
+        "INDETERMINATE_SUBJECT: the effect could not be derived from the request's parameters. Abstention is required; no default classification is applied (invariant 16)"
+      ],
+      "reasons": [
+        "effect footprint is not determinate"
+      ],
+      "error": null
+    },
+    {
+      "probe": "J",
+      "channel": "under-declared footprint",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "SUBJECT_BINDING_VIOLATION: declared 'ClaimProtocol', derived 'OperationalRequest' from the effect footprint. Recorded against the requester (invariant 16)",
+        "no operational receipt; required for derived subject OperationalRequest"
+      ],
+      "reasons": [
+        "durable or external effect derived from parameters: ['workspace/release/app.bin']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "K",
+      "channel": "second-order relabeling (footprint forgery)",
+      "required": null,
+      "verdict": "EXECUTE",
+      "derived_subject": "ClaimProtocol",
+      "matches_required": null,
+      "violations": [],
+      "reasons": [
+        "writes confined to declared scratch; not an operational effect",
+        "read-only or scratch-only effect",
+        "all gates required by the DERIVED subject ClaimProtocol passed independently"
+      ],
+      "error": null
+    },
+    {
+      "probe": "L",
+      "channel": "availability of legitimate unusual work",
+      "required": "EXECUTE",
+      "verdict": "EXECUTE",
+      "derived_subject": "ClaimProtocol",
+      "matches_required": true,
+      "violations": [],
+      "reasons": [
+        "writes confined to declared scratch; not an operational effect",
+        "read-only or scratch-only effect",
+        "all gates required by the DERIVED subject ClaimProtocol passed independently"
+      ],
+      "error": null
+    },
+    {
+      "probe": "M",
+      "channel": "scope laundering",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [
+        "durable write to '/etc/cron.d/payload' lies outside the adjudicated scope ['workspace/']; the kernel cannot govern it and will not authorize it"
+      ],
+      "reasons": [
+        "durable or external effect derived from parameters: ['/etc/cron.d/payload']"
+      ],
+      "error": null
+    },
+    {
+      "probe": "CONTROL",
+      "channel": "positive control (must EXECUTE)",
+      "required": "EXECUTE",
+      "verdict": "EXECUTE",
+      "derived_subject": "OperationalRequest",
+      "matches_required": true,
+      "violations": [],
+      "reasons": [
+        "durable or external effect derived from parameters: ['workspace/release/app.bin']",
+        "all gates required by the DERIVED subject OperationalRequest passed independently"
+      ],
+      "error": null
+    }
+  ]
+}

@@ -5,7 +5,7 @@ type: dataset
 authors:
   - family-names: Tillar
     given-names: James Andrew
-    affiliation: Tillar Technologies
+    affiliation: Tillar Technologies LLC
 abstract: >-
   Three frameworks for building and evaluating governed intelligent systems, archived with
   their concept-level provenance. CCTF (Contextual Compatibility and Transformation Framework)

@@ -1,5 +1,17 @@
 # Publication checklist
 
+## v0.2.0 candidate
+
+Preserve the `v0.1.0` tag and history unchanged. The v0.2.0 release consists
+of `V0.2.0-REMEDIATION.md`, the three `RESULT-v0.2.0` records (with
+EXP-003's canonical file named `RESULT-v0.2.0-final.json`), and
+`verify_reproducibility.py`. Before publication, run `make verify` from a clean
+checkout and record its output, commit, tag, release archive hash, and manifest
+hash. The candidate fixes write-once result handling, read/write path syntax
+checks, concept registration reachability, and receipt subject/version binding.
+It does not claim OS-level symlink containment or authenticated receipt
+provenance; those remain explicit limitations in the remediation record.
+
 State at last audit, 2026-09-14. Everything below either passes or is named as a manual step.
 
 ## Passing — verified mechanically
@@ -10,17 +22,14 @@ State at last audit, 2026-09-14. Everything below either passes or is named as a
 | Secrets, credentials, keys, tokens | none |
 | IP addresses, hostnames, emails, filesystem paths | none |
 | Internal component and service names, roadmap gaps | none |
-| Third parties named | none — author and his own company only |
-| Experiments reproduce from a cold run | EXP-001, EXP-002, EXP-003 all OK |
+| Third parties named | AI systems/providers are named for attribution; no private operational details |
+| Harnesses execute from a cold run | EXP-001, EXP-002, EXP-003 execute; this does not mean their criteria passed |
 | Git repository with commit history and a release tag | initialised, tagged `v0.1.0` |
 | `__pycache__` excluded | yes |
 
 ## Manual steps remaining
 
-1. **Replace `LICENSE` with the full CC BY 4.0 legalcode.** The file is currently a correct
-   notice with the SPDX identifier and the canonical URL, incorporated by reference — but
-   GitHub's detector matches the legalcode body, so until it is pasted the repository shows no
-   license badge.
+1. **License.** v0.2.0 includes the full CC BY 4.0 legalcode with SPDX and LLC attribution.
 
    ```
    curl -sL https://creativecommons.org/licenses/by/4.0/legalcode.txt > LICENSE

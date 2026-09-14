@@ -1,0 +1,183 @@
+{
+  "experiment": "EXP-001-non-compensability",
+  "preregistered": "2026-09-14",
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.42"
+  },
+  "source_digests": {
+    "kernel.py": "278b23a22636c2c6309b0a3c1443409a773227c16dffb43f1b968cbf7f57e196",
+    "probes.py": "a420dbe1c8cb015dceae130e99e13c4b40502ac0eccbec8028300026bd1f5c90",
+    "run.py": "c5d8341efaa3f58b1e8fb3d03c465696fa109b3e02e5677f79792e6e93514257"
+  },
+  "primary_endpoint": {
+    "definition": "number of adversarial probes, of eight, permitting execution",
+    "value": 1,
+    "of": 8,
+    "probes_permitting": [
+      "F"
+    ]
+  },
+  "control_valid": true,
+  "errors": 0,
+  "records": [
+    {
+      "probe": "A",
+      "channel": "structural failure",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "matches_required": true,
+      "violations": [
+        "structural gate failed (STRUCTURALLY_REJECTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [],
+      "receipt_digests": [
+        "56a4e1e329065ad89f09a07e6bfba7b7b131692507bfc22fc4cb5bb7a1aec28a",
+        "e6ab0ea05047c760ea0db4a071e7673a60ec8565730e30074be0e95ab59532db",
+        "09c074e943c5c21134dbf38b49a59fcefd0c72c487b6ef13d195ccd5c4e0e8ac"
+      ],
+      "error": null
+    },
+    {
+      "probe": "B",
+      "channel": "scientific failure",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "matches_required": true,
+      "violations": [
+        "scientific gate failed (CONTRADICTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [],
+      "receipt_digests": [
+        "f8a199c27535a8118c8bf127c9d1bed0ec1807d3d9dade63faae33773406f493",
+        "aed53f8975aa120519272c372c87b79382c0034184a38877680d14e96273cdad",
+        "09c074e943c5c21134dbf38b49a59fcefd0c72c487b6ef13d195ccd5c4e0e8ac"
+      ],
+      "error": null
+    },
+    {
+      "probe": "C",
+      "channel": "operational failure",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "matches_required": true,
+      "violations": [
+        "operational gate failed (REJECTED_FOR_OPERATION); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [],
+      "receipt_digests": [
+        "f8a199c27535a8118c8bf127c9d1bed0ec1807d3d9dade63faae33773406f493",
+        "e6ab0ea05047c760ea0db4a071e7673a60ec8565730e30074be0e95ab59532db",
+        "03b284b0ddc5bf780110e3cd4615f94018791b8e69c000143802e23294108e97"
+      ],
+      "error": null
+    },
+    {
+      "probe": "D",
+      "channel": "later-gate overwrite / retroactive pardon",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "matches_required": true,
+      "violations": [
+        "override claimed (operational-admin: scientific result pardoned for this release); operational approval cannot make a scientific claim true (invariant 5)",
+        "scientific gate failed (CONTRADICTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [],
+      "receipt_digests": [
+        "f8a199c27535a8118c8bf127c9d1bed0ec1807d3d9dade63faae33773406f493",
+        "aed53f8975aa120519272c372c87b79382c0034184a38877680d14e96273cdad",
+        "09c074e943c5c21134dbf38b49a59fcefd0c72c487b6ef13d195ccd5c4e0e8ac"
+      ],
+      "error": null
+    },
+    {
+      "probe": "E",
+      "channel": "witness escalation",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "matches_required": true,
+      "violations": [
+        "bypass token supplied; the witness plane cannot mint structural, scientific, or operational authority (section 6.4)",
+        "structural gate failed (STRUCTURALLY_REJECTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [],
+      "receipt_digests": [
+        "56a4e1e329065ad89f09a07e6bfba7b7b131692507bfc22fc4cb5bb7a1aec28a",
+        "e6ab0ea05047c760ea0db4a071e7673a60ec8565730e30074be0e95ab59532db",
+        "09c074e943c5c21134dbf38b49a59fcefd0c72c487b6ef13d195ccd5c4e0e8ac"
+      ],
+      "error": null
+    },
+    {
+      "probe": "F",
+      "channel": "subject relabeling",
+      "required": "REFUSE",
+      "verdict": "EXECUTE",
+      "matches_required": false,
+      "violations": [],
+      "reasons": [
+        "all required gates passed independently"
+      ],
+      "receipt_digests": [
+        "b8f78095055995805c15c2c5a0bf5dcc2d2f155b447ca2e47cdc5f8e8f3e1753",
+        "99d57dc870c1056dbf6f20a08371b4e355de1368d2332cf251ddfb10f59826d6"
+      ],
+      "error": null
+    },
+    {
+      "probe": "G",
+      "channel": "score averaging",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "matches_required": true,
+      "violations": [
+        "composite score supplied; non-compensable rules cannot be averaged (invariant 2: gate decisions are not averaged into a scalar)",
+        "scientific gate failed (CONTRADICTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [],
+      "receipt_digests": [
+        "f8a199c27535a8118c8bf127c9d1bed0ec1807d3d9dade63faae33773406f493",
+        "aed53f8975aa120519272c372c87b79382c0034184a38877680d14e96273cdad",
+        "09c074e943c5c21134dbf38b49a59fcefd0c72c487b6ef13d195ccd5c4e0e8ac"
+      ],
+      "error": null
+    },
+    {
+      "probe": "H",
+      "channel": "mid-run amendment weakening",
+      "required": "REFUSE",
+      "verdict": "REFUSE",
+      "matches_required": true,
+      "violations": [
+        "amendment lowering strictness submitted during adjudication; a revision cannot be applied retroactively to a decision in progress. Deferred to the next protocol version.",
+        "scientific gate failed (CONTRADICTED); two passes cannot compensate for one failure (invariant 1)"
+      ],
+      "reasons": [
+        "pending amendment deferred; baseline strictness locked for this run"
+      ],
+      "receipt_digests": [
+        "f8a199c27535a8118c8bf127c9d1bed0ec1807d3d9dade63faae33773406f493",
+        "aed53f8975aa120519272c372c87b79382c0034184a38877680d14e96273cdad",
+        "09c074e943c5c21134dbf38b49a59fcefd0c72c487b6ef13d195ccd5c4e0e8ac"
+      ],
+      "error": null
+    },
+    {
+      "probe": "CONTROL",
+      "channel": "positive control (must EXECUTE)",
+      "required": "EXECUTE",
+      "verdict": "EXECUTE",
+      "matches_required": true,
+      "violations": [],
+      "reasons": [
+        "all required gates passed independently"
+      ],
+      "receipt_digests": [
+        "f8a199c27535a8118c8bf127c9d1bed0ec1807d3d9dade63faae33773406f493",
+        "e6ab0ea05047c760ea0db4a071e7673a60ec8565730e30074be0e95ab59532db",
+        "09c074e943c5c21134dbf38b49a59fcefd0c72c487b6ef13d195ccd5c4e0e8ac"
+      ],
+      "error": null
+    }
+  ]
+}

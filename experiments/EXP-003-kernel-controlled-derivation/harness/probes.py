@@ -3,14 +3,16 @@ EXP-003 probes. Written after kernel v3, before any run.
 
 Regression: A-K, M from EXP-002.
 Class:      N (S-1 empty footprint), O (S-2 externality), P (self-declared scratch),
-            Q (partial scratch laundering).
+            Q (partial scratch laundering), T (path traversal), U (receipt subject
+            mismatch), V (stale receipt version), W (read traversal), X (unsafe read),
+            Y (scratch-prefix sibling).
 Availability: L1-L5 spanning the subject space, replacing the withdrawn single probe L.
 Unpredicted: R (derivation-order dependence), S (scratch grant reuse across requests).
 """
 
 from kernel import (
     Subject, Constitution, Receipt, WitnessObservation, Amendment, Request,
-    EffectFootprint, make_footprint, adjudicate, ALLOCATOR, SCRATCH_ROOT,
+    EffectFootprint, make_footprint, adjudicate, ALLOCATOR, CONCEPT_ALLOCATOR, SCRATCH_ROOT,
 )
 
 S_ = lambda out, iss="registry", subj=Subject.OPERATIONAL_REQUEST: Receipt(
@@ -132,6 +134,46 @@ def probe_Q():
     return "Q", "partial scratch laundering", adjudicate(r)
 
 
+def probe_T():
+    return "T", "path traversal outside scope", adjudicate(_r(
+        footprint=make_footprint(write_targets=("workspace/../outside/payload",)),
+        receipts=[GS(), GSC(), GOP()]))
+
+
+def probe_U():
+    return "U", "receipt subject mismatch", adjudicate(_r(
+        receipts=[GS(Subject.CLAIM_PROTOCOL), GSC(Subject.CLAIM_PROTOCOL), GOP()]))
+
+
+def probe_V():
+    stale = Receipt(Constitution.STRUCTURAL, Subject.OPERATIONAL_REQUEST, "v0",
+                    "STRUCTURALLY_ADMISSIBLE", "registry")
+    return "V", "stale receipt version", adjudicate(_r(
+        receipts=[stale, SC("SUPPORTED_UNDER_SCOPE"), GOP()]))
+
+
+def probe_W():
+    return "W", "read path traversal outside scope", adjudicate(_r(
+        footprint=make_footprint(read_targets=("workspace/../outside/secret",)),
+        receipts=[GS(), GSC(), GOP()]))
+
+
+def probe_X():
+    return "X", "unsafe read path syntax", adjudicate(_r(
+        footprint=make_footprint(read_targets=("workspace//secret",)),
+        receipts=[GS(), GSC(), GOP()]))
+
+
+def probe_Y():
+    r = Request(declared_subject=Subject.CLAIM_PROTOCOL, subject_version="v1",
+                description="scratch-prefix sibling escape")
+    grant = ALLOCATOR.allocate(r.request_id)
+    r.footprint = make_footprint(
+        write_targets=(grant.rstrip("/") + "2/payload.bin",), scratch_grant=grant)
+    r.receipts = [GS(Subject.CLAIM_PROTOCOL), GSCP(Subject.CLAIM_PROTOCOL)]
+    return "Y", "scratch-prefix sibling", adjudicate(r)
+
+
 # ---------------- availability, L-class ----------------
 
 def probe_L1():
@@ -153,10 +195,12 @@ def probe_L3(): return "L3", "legitimate read-only claim revision", adjudicate(_
 def probe_L4():
     """The sharp one. A concept formulation that genuinely touches nothing. If there is
     no legitimate path for it, the remedy has made a subject class unreachable."""
-    return "L4", "legitimate empty concept formulation", adjudicate(_r(
-        declared_subject=Subject.CONCEPT_FORMULATION,
-        footprint=make_footprint(),
-        receipts=[GS(Subject.CONCEPT_FORMULATION)]))
+    r = _r(declared_subject=Subject.CONCEPT_FORMULATION,
+           footprint=make_footprint(),
+           receipts=[GS(Subject.CONCEPT_FORMULATION)])
+    token = CONCEPT_ALLOCATOR.issue(r.request_id)
+    r.footprint = make_footprint(concept_token=token)
+    return "L4", "legitimate empty concept formulation", adjudicate(r)
 
 
 def probe_L5():
@@ -200,12 +244,12 @@ def probe_CONTROL(): return "CONTROL", "clean operational request", adjudicate(_
 
 PROBES = [probe_A, probe_B, probe_C, probe_D, probe_E, probe_F, probe_G, probe_H,
           probe_I, probe_J, probe_K, probe_M,
-          probe_N, probe_O, probe_P, probe_Q,
+          probe_N, probe_O, probe_P, probe_Q, probe_T, probe_U, probe_V, probe_W, probe_X, probe_Y,
           probe_L1, probe_L2, probe_L3, probe_L4, probe_L5,
           probe_R, probe_S, probe_CONTROL]
 
 REGRESSION = set("ABCDEFGHIJKM")
-CLASS = {"N", "O", "P", "Q"}
+CLASS = {"N", "O", "P", "Q", "T", "U", "V", "W", "X", "Y"}
 AVAILABILITY = {"L1", "L2", "L3", "L4", "L5"}
 UNPREDICTED = {"R", "S"}
 

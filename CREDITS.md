@@ -1,6 +1,6 @@
 # Credits
 
-Author and architect: **James Andrew Tillar**, Tillar Technologies. The three frameworks, the
+Author and architect: **James Andrew Tillar**, Tillar Technologies LLC. The three frameworks, the
 method, and every decision about what this repository claims are his.
 
 Six AI systems contributed. Each is credited for what the record shows it did, at the strength

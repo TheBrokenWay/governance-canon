@@ -31,7 +31,7 @@ def main():
         "of": len(REGRESSION),
         "permitting": [r["probe"] for r in g(REGRESSION) if r["verdict"]=="EXECUTE"]},
       "endpoint_2_class": {
-        "definition": "N,O,P,Q deviating from required (target 0)",
+        "definition": "N,O,P,Q,T,U,V,W,X,Y deviating from required (target 0)",
         "value": sum(1 for r in g(CLASS) if not r["matches_required"]), "of": len(CLASS),
         "deviating": [r["probe"] for r in g(CLASS) if not r["matches_required"]]},
       "endpoint_3_availability": {
@@ -45,7 +45,10 @@ def main():
       "control_valid": next(r for r in recs if r["probe"]=="CONTROL")["verdict"]=="EXECUTE",
       "errors": sum(1 for r in recs if r["error"]), "records": recs}
     print(json.dumps(out, indent=2))
-    (HERE.parent/"RESULT.json").write_text(json.dumps(out, indent=2))
+    output = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE.parent / "RESULT.json"
+    if output.exists():
+        raise SystemExit(f"refusing to overwrite existing result: {output}")
+    output.write_text(json.dumps(out, indent=2))
 
 if __name__ == "__main__":
     main()
